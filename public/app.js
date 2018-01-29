@@ -16,6 +16,7 @@ io3d.utils.ui.fileDrop({
   elementId: 'file-drop-box',
   upload: true,
   dragOverCssClass: 'file-drop-box-dragover',
+  // set file url if upload succeded
   onInput: function (files) {
     if (files && files.length) {
       floorPlanEl.value = files[0].url
@@ -23,7 +24,7 @@ io3d.utils.ui.fileDrop({
     }
   }
 })
-
+// check for manual file url input
 floorPlanEl.addEventListener('input', function(evt){
   var url = evt.target.value
   var isValid = /(http(s?):)|([/|.|\w|\s])*\.(?:jpg|gif|png)/.test(url)
@@ -37,7 +38,6 @@ floorPlanEl.addEventListener('input', function(evt){
   } else clearImg()
   console.log(url)
 })
-
 // show img element if loading succeeded
 dropZone.onload = function() {
   dropArea.style.display = 'none'
@@ -45,23 +45,25 @@ dropZone.onload = function() {
   floorPlanEl.style.color = '#27292b'
   dropZone.setAttribute('data-valid', true)
 }
-// reset the upload box if loading the image fails 
+// handle image loading errors
 dropZone.onerror = function() {
   floorPlanEl.style.color = 'red'
+  clearImg()
+}
+// reset the upload box
+function clearImg() {
   dropZone.removeAttribute('data-valid')
   dropArea.style.display = 'block'
   dropZone.style.display = 'none'
 }
-
 // clear entire form
 buttonClear.addEventListener('click', function(){
   emailEl.value=''
   addressEl.value=''
   floorPlanEl.value=''
   apiInfoEl.innerHTML=''
-  dropArea.style.display = 'block'
-  dropZone.style.display = 'none'
-});
+  clearImg()
+})
 
 // add event listener to click button
 function submitHandler() {
@@ -78,7 +80,6 @@ function submitHandler() {
     apiInfoEl.innerHTML += 'Sending request failed:' + JSON.stringify(error, null, 2)
     apiInfoEl.innerHTML += '<br>Check your email for details'
   })
-
   return false;
 }
 
