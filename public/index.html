@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="helium-css/helium.js"></script>
-    <script src="https://dist.3d.io/releases/3dio-js/1.x.x-beta/3dio.min.js"></script>
+    <script src="https://dist.3d.io/3dio-js/1.1.x/3dio.min.js"></script>
 </head>
 
 <body>
@@ -19,17 +19,21 @@
             <h2>Convert your floor plan into an interactive 3D model for free!</h2>
             <div id="file-drop-box" class="order-info-upload">
                 <div class="content-dropzone free-order" title="Free 3D model floor plan upload" file-keys="">
-                    <label class="dropzone-area">
-                        <div class="dropzone-text">
-                          <span class="dropzone-info">
-                            <img width="60px" src="https://spaces-static.archilogic.com/build/170825-123340-a421eda/admin/img/icon-upload-floorplan.svg">
-                            Upload Floor Plan
-                          </span>
-                        </div>
-                    </label>
+                    <img class="dropzone-upload"/>
+                    <div class="dropzone-area">
+                        <span class="dropzone-info">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="62" height="52" viewBox="0 0 62 52">
+                            <g transform="translate(.918 1.557)" stroke-width="2" stroke="#9B9B9B" fill="none" fill-rule="evenodd" opacity=".6">
+                                <polygon points="0.4350024 0 0.4350024 48.8151481 37.9016044 48.8151481 37.7623891 29.4489155 59.9940481 29.4489155 59.9416488 15.2902531 59.9416488 0 24.7207655 0"/>
+                                <path d="M37.6430952,29.5566502 L0.620364247,29.5566502M23.3959538,28.7252984 L23.3959538,1.54923283M24.016484,10.1337087 L59.9376502,10.1337087" stroke-linecap="square"/>
+                            </g>
+                        </svg>
+                        <span>Upload Floor Plan</span>
+                        </span>
+                    </div>
                 </div>
             </div>
-            <div class="order-field">
+            <div class="order-field order-field-url">
                 <input name='floor-plan=url' id="floor-plan-url" type='text' required="required" class="order-input">
                 <label for="address" class="order-label"> ... or enter image URL here</label>
             </div>

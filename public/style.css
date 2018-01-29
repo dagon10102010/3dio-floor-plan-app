@@ -59,6 +59,9 @@ input {
     display: inline-block;
     position: relative;
 }
+.order-field-url {
+    margin-top: 30px;
+}
 .order-btn {
     border: 0;
     outline: 0;
@@ -70,8 +73,7 @@ input {
     letter-spacing: .3px;
     border-radius: 3px;
     padding: 0 32px;
-    margin-top: 20px;
-    margin-bottom: 2px;
+    margin: 20px 10px 2px 0;
     color: #fff;
     width: 235px;
     background-color: #1aacdb;
@@ -137,6 +139,12 @@ label.order-label {
     transition: .2s ease all
 }
 
+.dropzone-upload {
+    display: none;
+    height: 150px;
+    margin: 0 auto;
+}
+
 .dropzone-area {
     display: block
 }
@@ -149,7 +157,6 @@ label.order-label {
 }
 
 .detail-links {
-    width: 850px;
     max-width: 100%;
     margin: auto;
     margin-top: 10px;

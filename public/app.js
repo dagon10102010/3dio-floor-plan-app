@@ -8,6 +8,8 @@ var emailEl = document.querySelector('#email')
 var buttonEl = document.querySelector('.convert-button')
 var apiInfoEl = document.querySelector('#api-info')
 var buttonClear = document.querySelector('#btn-clear')
+var dropArea = document.querySelector('.dropzone-area')
+var dropZone = document.querySelector('.dropzone-upload')
 
 // create file drop box
 io3d.utils.ui.fileDrop({
@@ -15,18 +17,59 @@ io3d.utils.ui.fileDrop({
   upload: true,
   dragOverCssClass: 'file-drop-box-dragover',
   onInput: function (files) {
-    floorPlanEl.value = files[0].url
+    if (files && files.length) {
+      floorPlanEl.value = files[0].url
+      dropZone.src = files[0].url
+    }
   }
 })
 
+floorPlanEl.addEventListener('input', function(evt){
+  var url = evt.target.value
+  var isValid = /(http(s?):)|([/|.|\w|\s])*\.(?:jpg|gif|png)/.test(url)
+  if (url && url !== '') {
+    if (!isValid) {
+      floorPlanEl.style.color = 'red'
+      console.log('invalid')
+      return
+    }
+    dropZone.src = url
+  } else clearImg()
+  console.log(url)
+})
+
+// show img element if loading succeeded
+dropZone.onload = function() {
+  dropArea.style.display = 'none'
+  dropZone.style.display = 'block'
+  floorPlanEl.style.color = '#27292b'
+  dropZone.setAttribute('data-valid', true)
+}
+// reset the upload box if loading the image fails 
+dropZone.onerror = function() {
+  floorPlanEl.style.color = 'red'
+  dropZone.removeAttribute('data-valid')
+  dropArea.style.display = 'block'
+  dropZone.style.display = 'none'
+}
+
+// clear entire form
 buttonClear.addEventListener('click', function(){
-  emailEl.value='';
-  addressEl.value='';
-  floorPlanEl.value='';
+  emailEl.value=''
+  addressEl.value=''
+  floorPlanEl.value=''
+  apiInfoEl.innerHTML=''
+  dropArea.style.display = 'block'
+  dropZone.style.display = 'none'
 });
 
 // add event listener to click button
 function submitHandler() {
+  // prevent sending invalid images to the api
+  if (!dropZone.getAttribute('data-valid')) {
+    io3d.utils.ui.message('image is not valid')
+    return false;
+  }
   // start API request
   apiInfoEl.innerHTML = 'Sending API request...<br>'
   convertFloorPlanTo3d(floorPlanEl.value, addressEl.value, emailEl.value).then(function onSuccess(res) {
